@@ -1,7 +1,6 @@
-import { env } from '@/env'
+import { env } from '@/env';
 
 export const generalConfig: GeneralConfigType = {
-
   name: 'GlovedBot', // the name of your bot
   description: 'Private bot made by Gloves', // the description of your bot
   defaultLocale: 'en', // default language of the bot, must be a valid locale
@@ -15,29 +14,24 @@ export const generalConfig: GeneralConfigType = {
   links: {
     invite: '',
     supportServer: 'https://discord.gloved.dev',
+
     gitRemoteRepo: 'https://github.com/TheGloved1/GlovedBot.git',
   },
 
-  automaticUploadImagesToImgur: true, // enable or not the automatic assets upload
+  automaticUploadImagesToImgur: false, // enable or not the automatic assets upload
 
   devs: [], // discord IDs of the devs that are working on the bot (you don't have to put the owner's id here)
 
   // define the bot activities (phrases under its name). Types can be: PLAYING, LISTENING, WATCHING, STREAMING
   activities: [
     {
-      text: 'discord.js v14 with tscord',
-      type: 'PLAYING',
-    },
-    {
-      text: 'some knowledge',
-      type: 'STREAMING',
+      text: 'you',
+      type: 'WATCHING',
     },
   ],
-
-}
+};
 
 // global colors
 export const colorsConfig = {
-
   primary: '#2F3136',
-}
+};

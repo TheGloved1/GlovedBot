@@ -1,7 +1,7 @@
-import { Entity, EntityRepositoryType, PrimaryKey, Property } from '@mikro-orm/core'
-import { EntityRepository } from '@mikro-orm/sqlite'
+import { Entity, EntityRepositoryType, PrimaryKey, Property } from '@mikro-orm/core';
+import { EntityRepository } from '@mikro-orm/sqlite';
 
-import { CustomBaseEntity } from './BaseEntity'
+import { CustomBaseEntity } from './BaseEntity';
 
 // ===========================================
 // ================= Entity ==================
@@ -10,13 +10,13 @@ import { CustomBaseEntity } from './BaseEntity'
 @Entity({ customRepository: () => UserRepository })
 export class User extends CustomBaseEntity {
 
-	[EntityRepositoryType]?: UserRepository
+  [EntityRepositoryType]?: UserRepository;
 
-	@PrimaryKey({ autoincrement: false })
-    id!: string
+  @PrimaryKey({ autoincrement: false })
+    id!: string;
 
-	@Property()
-    lastInteract: Date = new Date()
+  @Property()
+    lastInteract: Date = new Date();
 
 }
 
@@ -26,13 +26,13 @@ export class User extends CustomBaseEntity {
 
 export class UserRepository extends EntityRepository<User> {
 
-	async updateLastInteract(userId?: string): Promise<void> {
-		const user = await this.findOne({ id: userId })
+  async updateLastInteract(userId?: string): Promise<void> {
+    const user = await this.findOne({ id: userId });
 
-		if (user) {
-			user.lastInteract = new Date()
-			await this.flush()
-		}
-	}
+    if (user) {
+      user.lastInteract = new Date();
+      await this.flush();
+    }
+  }
 
 }

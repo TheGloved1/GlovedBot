@@ -1,9 +1,10 @@
 {
-  "name": "tscord",
+  "name": "glovedbot",
   "version": "1.0.0",
-  "description": "A fully-featured discord bot template written in Typescript, intended to provide a framework that's easy to use, extend and modify",
+  "description": "A private discord bot made by Gloves",
   "license": "MIT",
   "main": "build/main.js",
+  "type": "commonjs",
   "tscord": {
     "version": "2.3"
   },
@@ -29,6 +30,7 @@
   "dependencies": {
     "@discordx/importer": "~1.2.1",
     "@discordx/pagination": "~3.5.0",
+    "@discordx/plugin-ytdl-player": "^2.2.0",
     "@discordx/utilities": "~6.1.0",
     "@mikro-orm/better-sqlite": "~5.6.16",
     "@mikro-orm/cli": "~5.6.16",

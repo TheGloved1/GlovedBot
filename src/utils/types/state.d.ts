@@ -1,3 +1,3 @@
 type state = {
-	[key: string]: any
-}
+  [key: string]: any
+};
