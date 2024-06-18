@@ -15,6 +15,9 @@ const en = {
 		NO_COMMAND_DESCRIPTION: 'No description provided.',
 	},
 	COMMANDS: {
+		MUSIC: {
+			DESCRIPTION: 'Commands related to music.',
+		},
 		INVITE: {
 			DESCRIPTION: 'Invite the bot to your server!',
 			EMBED: {

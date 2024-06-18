@@ -47,6 +47,12 @@ type RootTranslation = {
 		NO_COMMAND_DESCRIPTION: string
 	}
 	COMMANDS: {
+		MUSIC: {
+			/**
+			 * C​o​m​m​a​n​d​s​ ​r​e​l​a​t​e​d​ ​t​o​ ​m​u​s​i​c​.
+			 */
+			DESCRIPTION: string
+		}
 		INVITE: {
 			/**
 			 * I​n​v​i​t​e​ ​t​h​e​ ​b​o​t​ ​t​o​ ​y​o​u​r​ ​s​e​r​v​e​r​!
@@ -206,6 +212,12 @@ export type TranslationFunctions = {
 		NO_COMMAND_DESCRIPTION: () => LocalizedString
 	}
 	COMMANDS: {
+		MUSIC: {
+			/**
+			 * Commands related to music.
+			 */
+			DESCRIPTION: () => LocalizedString
+		}
 		INVITE: {
 			/**
 			 * Invite the bot to your server!

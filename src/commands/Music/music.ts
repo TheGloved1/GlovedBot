@@ -13,18 +13,12 @@ import {
   EmbedBuilder,
   GuildMember,
 } from 'discord.js';
-import type { ArgsOf } from 'discordx';
-import {
-  ButtonComponent,
-  Discord,
-  On,
-  Slash,
-  SlashGroup,
-  SlashOption,
-} from 'discordx';
+import { ArgsOf } from 'discordx';
 import fetch from 'isomorphic-unfetch';
 import spotifyUrlInfo from 'spotify-url-info';
 import { YouTube } from 'youtube-sr';
+
+import { ButtonComponent, Discord, On, Slash, SlashGroup, SlashOption } from '@/decorators';
 
 import { formatDurationFromMS, Queue } from './queue';
 
@@ -32,11 +26,9 @@ const spotify = spotifyUrlInfo(fetch);
 
 @Discord()
 @Category('Music')
-// Create music group
 @SlashGroup({ description: 'music', name: 'music' })
-// Assign all slashes to music group
 @SlashGroup('music')
-export class music {
+export default class MusicCommands {
 
   queueNode: QueueNode | null = null;
   guildQueue = new Map<string, Queue>();
@@ -63,8 +55,6 @@ export class music {
   async processJoin(
     interaction: CommandInteraction
   ): Promise<{ guild: Guild, member: GuildMember, queue: Queue } | null> {
-    await interaction.deferReply();
-
     if (
       !interaction.guild
       || !interaction.channel
@@ -116,8 +106,8 @@ export class music {
     return { guild, member, queue };
   }
 
-  @On({ event: 'voiceStateUpdate' })
-  handleVoiceState([, newState]: ArgsOf<'voiceStateUpdate'>): void {
+  @On('voiceStateUpdate')
+  handleVoiceState([newState]: ArgsOf<'voiceStateUpdate'>): void {
     if (
       newState.member?.user.id === newState.client.user.id
       && newState.channelId === null
@@ -129,6 +119,36 @@ export class music {
         this.guildQueue.delete(guildId);
       }
     }
+  }
+
+  @Slash({ name: 'search', description: 'Search for a song' })
+  async search(
+    @SlashOption({
+      description: 'song to search for',
+      name: 'song',
+      required: true,
+      type: ApplicationCommandOptionType.String,
+    })
+    song: string,
+    interaction: CommandInteraction
+  ) {
+    const rq = await this.processJoin(interaction);
+    if (!rq) return;
+
+    const videos = await YouTube.search(song);
+    const embed = new EmbedBuilder().setTitle('Search Results').setDescription(
+      videos
+        .map(
+          (video, index) => {
+            if (index > 3) return null;
+
+            return `**${index + 1}.** [${video.title}](${video.url})`;
+          }
+        )
+        .join('\n')
+    );
+
+    interaction.followUp({ embeds: [embed] });
   }
 
   @Slash({ description: 'Play a song', name: 'play' })
@@ -150,16 +170,14 @@ export class music {
     interaction: CommandInteraction
   ): Promise<void> {
     const rq = await this.processJoin(interaction);
-    if (!rq) {
-      return;
-    }
+    if (!rq) return;
 
     const { queue, member } = rq;
 
     const video = await YouTube.searchOne(songName).catch(() => null);
     if (!video) {
       await interaction.followUp(
-        `> Could not found song with keyword: \`${songName}\``
+        `> Could not find song with keyword: \`${songName}\``
       );
 
       return;

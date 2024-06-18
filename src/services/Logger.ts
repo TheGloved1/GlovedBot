@@ -50,11 +50,11 @@ export class Logger {
   private lastLogsTail: string[] = [];
 
   constructor(
-        @inject(delay(() => Client)) private client: Client,
-        @inject(delay(() => Scheduler)) private scheduler: Scheduler,
-        @inject(delay(() => Store)) private store: Store,
-        @inject(delay(() => Pastebin)) private pastebin: Pastebin,
-        @inject(delay(() => PluginsManager)) private pluginsManager: PluginsManager
+    @inject(delay(() => Client)) private client: Client,
+    @inject(delay(() => Scheduler)) private scheduler: Scheduler,
+    @inject(delay(() => Store)) private store: Store,
+    @inject(delay(() => Pastebin)) private pastebin: Pastebin,
+    @inject(delay(() => PluginsManager)) private pluginsManager: PluginsManager
   ) {
     if (!this.store.get('botHasBeenReloaded')) {
       console.info = (...args) => this.baseLog('info', ...args);
@@ -148,7 +148,7 @@ export class Logger {
     if (
       channel
       && (channel instanceof TextChannel
-      || channel instanceof ThreadChannel)
+        || channel instanceof ThreadChannel)
     ) {
       if (typeof message !== 'string')
         return channel.send(message).catch(console.error);
@@ -232,9 +232,9 @@ export class Logger {
    */
   log(
     message: string,
-        level: typeof this.levels[number] = 'info',
-        saveToFile: boolean = true,
-        channelId: string | null = null
+    level: typeof this.levels[number] = 'info',
+    saveToFile: boolean = true,
+    channelId: string | null = null
   ) {
     if (message === '')
       return;
@@ -281,17 +281,17 @@ export class Logger {
             (${chalk.bold.white(type)})
             "${chalk.bold.green(action)}"
             ${channel instanceof TextChannel || channel instanceof ThreadChannel
-                ? `${chalk.dim.italic.gray('in channel')} ${chalk.bold.blue(`#${channel.name}`)}`
-                : ''
-            }
+        ? `${chalk.dim.italic.gray('in channel')} ${chalk.bold.blue(`#${channel.name}`)}`
+        : ''
+      }
             ${guild
-                ? `${chalk.dim.italic.gray('in guild')} ${chalk.bold.blue(`${guild.name}`)}`
-                : ''
-            }
+        ? `${chalk.dim.italic.gray('in guild')} ${chalk.bold.blue(`${guild.name}`)}`
+        : ''
+      }
             ${user
-                ? `${chalk.dim.italic.gray('by')} ${chalk.bold.blue(`${user.username}#${user.discriminator}`)}`
-                : ''
-            }
+        ? `${chalk.dim.italic.gray('by')} ${chalk.bold.blue(`${user.username}#${user.discriminator}`)}`
+        : ''
+      }
         `;
 
     if (logsConfig.interaction.console)
@@ -385,11 +385,11 @@ export class Logger {
    */
   logGuild(type: 'NEW_GUILD' | 'DELETE_GUILD' | 'RECOVER_GUILD', guildId: string) {
     const additionalMessage
-			= type === 'NEW_GUILD'
-			  ? 'has been added to the db'
-			  : type === 'DELETE_GUILD'
-			    ? 'has been deleted'
-			    : type === 'RECOVER_GUILD' ? 'has been recovered' : '';
+      = type === 'NEW_GUILD'
+        ? 'has been added to the db'
+        : type === 'DELETE_GUILD'
+          ? 'has been deleted'
+          : type === 'RECOVER_GUILD' ? 'has been recovered' : '';
 
     resolveDependency(Client).then(async (client) => {
       const guild = await client.guilds.fetch(guildId).catch(() => null);
@@ -399,9 +399,9 @@ export class Logger {
                 (${chalk.bold.white(type)})
                 ${chalk.dim.italic.gray('Guild')}
                 ${guild
-                    ? `${chalk.bold.green(guild.name)} (${chalk.bold.blue(guildId)})`
-                    : guildId
-                }
+          ? `${chalk.bold.green(guild.name)} (${chalk.bold.blue(guildId)})`
+          : guildId
+        }
                 ${chalk.dim.italic.gray(additionalMessage)}
             `;
 
@@ -567,34 +567,34 @@ export class Logger {
     // connected
     if (apiConfig.enabled) {
       this.console(chalk.gray(boxen(
-				` API Server listening on port ${chalk.bold(apiConfig.port)} `,
-				{
-				  padding: 0,
-				  margin: {
-				    top: 1,
-				    bottom: 0,
-				    left: 1,
-				    right: 1,
-				  },
-				  borderStyle: 'round',
-				  dimBorder: true,
-				}
+        ` API Server listening on port ${chalk.bold(apiConfig.port)} `,
+        {
+          padding: 0,
+          margin: {
+            top: 1,
+            bottom: 0,
+            left: 1,
+            right: 1,
+          },
+          borderStyle: 'round',
+          dimBorder: true,
+        }
       )), 'info', true);
     }
 
     this.console(chalk.hex('7289DA')(boxen(
-			` ${this.client.user ? `${chalk.bold(this.client.user.tag)}` : 'Bot'} is ${chalk.green('connected')}! `,
-			{
-			  padding: 0,
-			  margin: {
-			    top: 1,
-			    bottom: 1,
-			    left: 1 * 3,
-			    right: 1 * 3,
-			  },
-			  borderStyle: 'round',
-			  dimBorder: true,
-			}
+      ` ${this.client.user ? `${chalk.bold(this.client.user.tag)}` : 'Bot'} is ${chalk.green('connected')}! `,
+      {
+        padding: 0,
+        margin: {
+          top: 1,
+          bottom: 1,
+          left: 1 * 3,
+          right: 1 * 3,
+        },
+        borderStyle: 'round',
+        dimBorder: true,
+      }
     )), 'info', true);
   }
 

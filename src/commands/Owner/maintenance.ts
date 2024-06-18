@@ -15,10 +15,10 @@ export default class MaintenanceCommand {
     Disabled
   )
   async maintenance(
-		@SlashOption({ name: 'state', type: ApplicationCommandOptionType.Boolean, required: true }) state: boolean,
-		  interaction: CommandInteraction,
-		  client: Client,
-		  { localize }: InteractionData
+    @SlashOption({ name: 'state', type: ApplicationCommandOptionType.Boolean, required: true }) state: boolean,
+      interaction: CommandInteraction,
+      client: Client,
+      { localize }: InteractionData
   ) {
     await setMaintenance(state);
 

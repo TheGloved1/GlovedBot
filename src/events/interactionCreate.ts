@@ -16,7 +16,7 @@ export default class InteractionCreateEvent {
     private stats: Stats,
     private logger: Logger,
     private db: Database
-  ) {}
+  ) { }
 
   @On('interactionCreate')
   @Guard(Maintenance)
@@ -25,12 +25,7 @@ export default class InteractionCreateEvent {
     client: Client
   ) {
     // defer the reply
-    if (
-      generalConfig.automaticDeferring
-      && interaction instanceof CommandInteraction
-      && !interaction.commandName.startsWith('music')
-    )
-      await interaction.deferReply();
+    if (generalConfig.automaticDeferring && interaction instanceof CommandInteraction) await interaction.deferReply();
 
     // insert user in db if not exists
     await syncUser(interaction.user);
